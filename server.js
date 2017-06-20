@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'controls.html'));
 });
 
-app.get('/controls', (req, res) => {
+app.get('/viewer', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
