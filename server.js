@@ -1,39 +1,56 @@
-// server.js
-// where your node app starts
+const path = require('path');
+const express = require('express');
 
-// init project
-var express = require('express');
-var app = express();
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+const users = io.of('/controls');
+const viewer = io.of('/viewer');
 
-// http://expressjs.com/en/starter/static-files.html
+// ========================
+
+server.listen(8080);
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/controls', (req, res) => {
+  res.sendFile(path.join(__dirname, 'controls.html'));
+});
+
 app.use(express.static('public'));
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/views/index.html');
+// ========================
+
+function sendClientsCount() {
+  users.clients((err, clients) => {
+    if (err) {
+      throw new Error(err);
+    }
+    users.emit('updateClientCount', clients.length);
+    viewer.emit('updateClientCount', clients.length);
+  });
+}
+
+function addSocketEvents(socket) {
+  socket.on('click', (data) => {
+    viewer.emit('click', data);
+  });
+
+  socket.on('disconnect', () => {
+    sendClientsCount();
+  });
+}
+
+// =========================
+
+users.on('connection', (socket) => {
+  addSocketEvents(socket);
+  sendClientsCount();
 });
 
-app.get("/dreams", function (request, response) {
-  response.send(dreams);
-});
-
-// could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
-app.post("/dreams", function (request, response) {
-  dreams.push(request.query.dream);
-  response.sendStatus(200);
-});
-
-// Simple in-memory store for now
-var dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-];
-
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+viewer.on('connection', () => {
+  sendClientsCount();
 });

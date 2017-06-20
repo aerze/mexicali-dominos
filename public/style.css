@@ -1,82 +1,36 @@
-/* styles */
-/* called by your view template */
-
-/* You might want to try something fancier: */
-/* less: http://lesscss.org/ */
-
-* {
-  box-sizing: border-box;
-}
-
 body {
-  font-family: helvetica, arial, sans-serif;
-  margin: 25px;
+  margin: 0;
+  overflow: hidden;
 }
 
-h1 {
-  font-weight: bold;
-  color: pink;
+#viewer {
+  background-color: aliceblue;
+  width: 100vw;
+  height: 100vh;
 }
 
-.bold {
-  font-weight: bold;
-}
-
-p {
-  max-width: 600px;
-}
-
-form {
-  margin-bottom: 25px;
-  padding: 15px;
-  background-color: cyan;
-  display: inline-block;
+#controls {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  max-width: 340px;
-  border-radius: 3px;
+  height: 5rem;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
-input {
+.btn {
+  -webkit-appearance: none;
+  font-family: "Helvetica";
+  font-size: 2rem;
+  background-color: white;
+  border: solid 1px #333;
+  padding: 0.2em 1em;
+  margin: 1rem auto;
   display: block;
-  margin-bottom: 10px;
-  padding: 5px;
-  width: 100%;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-  font-size: 16px;
-}
-
-button {
-  font-size: 16px;
-  border-radius: 3px;
-  background-color: lightgrey;
-  border: 1px solid grey;
-  box-shadow: 2px 2px teal;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: yellow;
-}
-
-button:active {
-  box-shadow: none;
-}
-
-li {
-  margin-bottom: 5px;
-}
-
-footer {
-  margin-top: 50px;
-  padding-top: 25px;
-  border-top: 1px solid lightgrey;
-}
-
-footer > a {
-  color: #BBBBBB;
-}
-
-.nicejob {
-  text-decoration: line-through;
+.btn:hover, .btn:focus {
+  border-radius: 10px;
 }
