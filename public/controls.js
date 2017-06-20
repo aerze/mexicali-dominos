@@ -1,6 +1,6 @@
 /* globals document, io, performance, window */
 
-const socket = io.connect('localhost:8080/controls');
+const socket = io('/controls');
 
 const countElt = document.getElementById('count');
 const nounElt = document.getElementById('noun');

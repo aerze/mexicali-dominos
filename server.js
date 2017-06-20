@@ -13,11 +13,11 @@ const viewer = io.of('/viewer');
 server.listen(8080);
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'controls.html'));
 });
 
 app.get('/controls', (req, res) => {
-  res.sendFile(path.join(__dirname, 'controls.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.use(express.static('public'));

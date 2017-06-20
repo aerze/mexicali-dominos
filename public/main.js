@@ -1,7 +1,7 @@
 /* global document, io, performance, window */
 
 // global / environmental
-const socket = io.connect('localhost:8080/viewer');
+const socket = io('/viewer');
 
 // for animations
 
