@@ -30,8 +30,8 @@ This demo went great and we got 22 people (most of the room!) participating.
 ## Links
 
 - [My slide deck](https://docs.google.com/presentation/d/1t2-ebDUL6r09tO1s18UXWvALtZg-cQebSZpEmikYUNE/edit?usp=sharing)
-- Blog post (coming soon!)
 - [All my demos](https://github.com/vgpena/socket-to-me)
+- [Blog post on We RISE](https://vgpena.github.io/we-rise-2017/)
 - [Talk abstract](https://werise.tech/sessions/2017/4/23/lets-talk-sockets-creating-interactive-art-and-installations-with-socketio)
 - [We RISE 2017 site](https://werise.tech/)
 - [Socket.IO](https://socket.io/)
