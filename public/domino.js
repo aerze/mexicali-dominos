@@ -10,6 +10,16 @@ class Tile extends Array {
   }
 }
 
+class Station {}
+
+class Line {}
+
+class Player {
+  constructor() {
+    this
+  }
+}
+
 class Domino {
   constructor() {
     this.tiles = new Map();
@@ -35,6 +45,36 @@ class Domino {
       
     }
   }
+  
+  addPlayer() {}
+  
+  dealHands() {}
+  
+  startGame() {}
+  
+  startRound() {}
+  
+  startTurn() {}
+  
+  placeTile() {}
+  
+  handleDouble() {}
+  
+  validateDouble() {}
+  
+  handleSingle() {}
+  
+  openLine() {}
+  
+  closeLine() {}
+  
+  endTurn() {}
+  
+  endRound() {}
+  
+  calculateScores() {}
+  
+  endGame() {}
 }
 
 if (module) {
