@@ -8,6 +8,8 @@ const io = require("socket.io")(server);
 const users = io.of("/controls");
 const viewer = io.of("/viewer");
 
+const { Domino } = require('./public/domino.js')
+
 // ========================
 
 server.listen(8080);
@@ -54,3 +56,4 @@ users.on("connection", socket => {
 viewer.on("connection", () => {
   sendClientsCount();
 });
+
