@@ -36,7 +36,7 @@ class Line {
 
 class Player {
   constructor() {
-    this
+    this.line = null;
   }
 }
 
