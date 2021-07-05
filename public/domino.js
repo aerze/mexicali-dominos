@@ -1,20 +1,16 @@
-class Domino {
-  constructor(top, bottom) {
-    this.top = top;
-    this.bottom = bottom;
-    // this[0] = top;
-    this[1] = bottom;
+class Tile extends Array {
+  constructor(t, b) {
+    super(2);
+    this[0] = t;
+    this[1] = b;
   }
-  
-  get 0 ()
 }
 
-const r = new Domino(1, 8);
-
-console.log(r[0]);
+const [t, b] = r;
+console.log(t, b);
 
 if (module) {
   module.exports = {
-    Domino
+    Tile
   };
 }
