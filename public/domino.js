@@ -16,7 +16,7 @@ class Domino {
     this.deck = new Set();
   }
 
-  createTiles() {
+  createTiles(tiles = this.tiles) {
     for (let t = 1; t <= 12; t++) {
       for (let b = 1; b <= 12; b++) {
         const tile = new Tile(t, b);
@@ -25,8 +25,15 @@ class Domino {
     }
   }
   
-  mixTiles() {
-    const a = Array
+  mixTiles(tiles = this.tiles) {
+    const mixed = Array.from(tiles.values());
+    
+  }
+  
+  shuffleDeck (a) {
+    for (let i = a.length -1; i >= 0; i--) {
+      
+    }
   }
 }
 
