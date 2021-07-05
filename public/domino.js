@@ -14,12 +14,16 @@ class Station {
   constructor() {}
   
   addLine() {}
+  
+  getOpenLinks() {}
 }
 
 class Line {
   constructor() {
     this.set = new Set();
   }
+  
+  getOpenLinks() {}
   
   addSingleLink() {}
   
@@ -79,6 +83,8 @@ class Domino {
   validateDouble() {}
   
   handleSingle() {}
+  
+  drawTile() {}
   
   openLine() {}
   
