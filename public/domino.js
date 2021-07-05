@@ -10,9 +10,25 @@ class Tile extends Array {
   }
 }
 
-class Station {}
+class Station {
+  constructor() {}
+  
+  addLine() {}
+}
 
-class Line {}
+class Line {
+  constructor() {
+    this.set = new Set();
+  }
+  
+  addSingleLink() {}
+  
+  addDoubleLink() {}
+  
+  open() {}
+  
+  close() {}
+}
 
 class Player {
   constructor() {
