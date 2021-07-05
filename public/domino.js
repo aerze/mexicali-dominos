@@ -4,26 +4,29 @@ class Tile extends Array {
     this[0] = t;
     this[1] = b;
   }
-  
+
   get id() {
-    return `${this[0]},${this[1]}`
+    return `${this[0]},${this[1]}`;
   }
 }
 
 class Domino {
-  constructor () {
-    
+  constructor() {
+    this.tiles = new Map();
+    this.deck = new Set();
   }
-  
-  createTiles () {
-    const tiles = new Map();
-    
+
+  createTiles() {
     for (let t = 1; t <= 12; t++) {
       for (let b = 1; b <= 12; b++) {
         const tile = new Tile(t, b);
-        tiles.set(tile.id, tile)
+        this.tiles.set(tile.id,tile);
       }
     }
+  }
+  
+  mixTiles() {
+    const a = Array
   }
 }
 
