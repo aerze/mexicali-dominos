@@ -1,26 +1,26 @@
-const path = require('path');
-const express = require('express');
+const path = require("path");
+const express = require("express");
 
 const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
 
-const users = io.of('/controls');
-const viewer = io.of('/viewer');
+const users = io.of("/controls");
+const viewer = io.of("/viewer");
 
 // ========================
 
 server.listen(8080);
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'controls.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "controls.html"));
 });
 
-app.get('/viewer', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get("/viewer", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 // ========================
 
@@ -29,28 +29,28 @@ function sendClientsCount() {
     if (err) {
       throw new Error(err);
     }
-    users.emit('updateClientCount', clients.length);
-    viewer.emit('updateClientCount', clients.length);
+    users.emit("updateClientCount", clients.length);
+    viewer.emit("updateClientCount", clients.length);
   });
 }
 
 function addSocketEvents(socket) {
-  socket.on('click', (data) => {
-    viewer.emit('click', data);
+  socket.on("click", data => {
+    viewer.emit("click", data);
   });
 
-  socket.on('disconnect', () => {
+  socket.on("disconnect", () => {
     sendClientsCount();
   });
 }
 
 // =========================
 
-users.on('connection', (socket) => {
+users.on("connection", socket => {
   addSocketEvents(socket);
   sendClientsCount();
 });
 
-viewer.on('connection', () => {
+viewer.on("connection", () => {
   sendClientsCount();
 });
