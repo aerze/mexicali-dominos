@@ -8,14 +8,18 @@ const io = require("socket.io")(server);
 const users = io.of("/controls");
 const viewer = io.of("/viewer");
 
-const { Domino } = require('./public/domino.js')
+const { Domino } = require("./public/domino.js");
+
+const domino = new Domino();
 
 // ========================
 
-server.listen(8080);
+server.listen(8080, () => {
+  console.log(`Server running at http://localhost:8080/`);
+});
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "controls.html"));
+  res.sendFile(path.join(__dirname, "domino.html"));
 });
 
 app.get("/viewer", (req, res) => {
@@ -23,6 +27,18 @@ app.get("/viewer", (req, res) => {
 });
 
 app.use(express.static("public"));
+
+// ========================
+let count = 0;
+io.on("connection", (socket) => {
+  const playerId = count++;
+  console.log("playerId", playerId);
+
+  socket.on("createPlayer", ({ playerName }, cb) => {
+    console.log("createPlayer", playerName);
+    cb({ playerName, playerId });
+  });
+});
 
 // ========================
 
@@ -37,7 +53,7 @@ function sendClientsCount() {
 }
 
 function addSocketEvents(socket) {
-  socket.on("click", data => {
+  socket.on("click", (data) => {
     viewer.emit("click", data);
   });
 
@@ -48,7 +64,7 @@ function addSocketEvents(socket) {
 
 // =========================
 
-users.on("connection", socket => {
+users.on("connection", (socket) => {
   addSocketEvents(socket);
   sendClientsCount();
 });
@@ -56,4 +72,3 @@ users.on("connection", socket => {
 viewer.on("connection", () => {
   sendClientsCount();
 });
-

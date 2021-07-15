@@ -35,32 +35,48 @@ class Line {
 }
 
 class Player {
-  constructor() {
-    this.line = null;
+  static count = 0;
+  constructor(conn) {
+    this.conn = conn;
+    this.id = Player.count++;
   }
 }
 
 class Domino {
   constructor() {
-    this.tiles = new Map();
-    this.deck = new Set();
+    this.tileMap = Domino.createTileMap();
+    this.drawPile = Domino.createDrawPile(this.tileMap);
   }
 
-  createTiles(tiles = this.tiles) {
+  static createTileMap() {
+    const tileMap = new Map();
     for (let t = 1; t <= 12; t++) {
       for (let b = 1; b <= 12; b++) {
         const tile = new Tile(t, b);
-        this.tiles.set(tile.id, tile);
+        tileMap.set(tile.id, tile);
       }
     }
+    return tileMap;
   }
 
-  mixTiles(tiles = this.tiles) {
-    const mixed = Array.from(tiles.values());
+  static shuffleArray(array) {
+    let m = array.length,
+      t,
+      i;
+
+    while (m) {
+      i = Math.floor(Math.random() * m--);
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+    }
+
+    return array;
   }
 
-  shuffleDeck(a) {
-    for (let i = a.length - 1; i >= 0; i--) {}
+  static createDrawPile(tileMap) {
+    const tileIds = Array.from(tileMap.values()).map((t) => t.id);
+    return Domino.shuffleArray(tileIds);
   }
 
   addPlayer() {}
@@ -96,20 +112,40 @@ class Domino {
   endGame() {}
 }
 
+class Game {
+  static PHASES = {
+    PRE_MATCH: "PRE_MATCH", // connect players, set options
+  };
+
+  constructor(conn) {
+    this.conn = conn;
+    this.tileMap = Domino.createTileMap();
+    this.drawPile = Domino.createDrawPile();
+    this.phase = "PRE_MATCH";
+    this.players = new Map();
+  }
+
+  addPlayer(player) {
+    this.players.set(player.id, player);
+  }
+
+  removePlayer(player) {
+    this.players.delete(player.id);
+  }
+
+  update() {}
+
+  start() {
+    this.dealHands();
+  }
+
+  dealHands() {}
+}
+
 if (module) {
   module.exports = {
-    Tile
+    Tile,
+    Domino,
+    Game,
   };
-}
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-
-  max = Math.floor(max);
-
-  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
-
-function shuffleArray(array) {
-  
 }
