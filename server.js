@@ -5,12 +5,15 @@ const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
+const { Player } = require("./server/player.js");
+const { Lobby } = require("./server/lobby.js");
+
 const users = io.of("/controls");
 const viewer = io.of("/viewer");
 
-const { Domino } = require("./public/domino.js");
+// const { Domino } = require("./public/domino.js");
 
-const domino = new Domino();
+// const domino = new Domino();
 
 // ========================
 
@@ -31,12 +34,47 @@ app.use(express.static("public"));
 // ========================
 let count = 0;
 io.on("connection", (socket) => {
-  const playerId = count++;
-  console.log("playerId", playerId);
+  const socketCount = count++;
+  console.log("socketCount", socketCount);
 
-  socket.on("createPlayer", ({ playerName }, cb) => {
-    console.log("createPlayer", playerName);
-    cb({ playerName, playerId });
+  let player = null;
+  let lobby = null;
+
+  socket.on("player.create", ({ playerName }, cb) => {
+    player = Player.create(playerName, socket);
+    console.log("player.create", playerName);
+    cb(player);
+  });
+
+  socket.on("lobby.list", (cb) => {
+    const list = Lobby.list.entries();
+    console.log("lobby.list");
+    cb(list);
+  });
+
+  socket.on("lobby.create", ({ lobbyName }, cb) => {
+    lobby = Lobby.create(lobbyName);
+    lobby.add(player);
+    lobby.host(player);
+    console.log("lobby.create", lobbyName);
+    cb(lobby);
+  });
+
+  socket.on("lobby.join", ({ lobbyId }, cb) => {
+    lobby = Lobby.list.get(lobbyId);
+    lobby.add(player);
+    console.log("lobby.join", lobby.lobbyName);
+    cb(lobby);
+  });
+
+  socket.on("disconnect", () => {
+    if (lobby) {
+      lobby.remove(player);
+    }
+
+    if (player) {
+      Player.delete(player);
+    }
   });
 });
 

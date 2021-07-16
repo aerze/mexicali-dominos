@@ -20,7 +20,7 @@ client.socket.on("disconnect", () => {
 
 export const createPlayer = async (playerName) => {
   return new Promise((resolve, reject) => {
-    client.socket.emit("createPlayer", { playerName }, resolve);
+    client.socket.emit("player.create", { playerName }, resolve);
   });
 };
 
